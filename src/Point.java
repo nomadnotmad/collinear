@@ -8,7 +8,6 @@
  *
  ******************************************************************************/
 
-import java.awt.*;
 import java.util.Comparator;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
@@ -63,8 +62,8 @@ public class Point implements Comparable<Point> {
     public double slopeTo(Point that) {
         /* YOUR CODE HERE */
         if ((this.x == that.x) && (this.y == that.y)) return Double.NEGATIVE_INFINITY;
-        if (this.x == that.x) return +0.0;
-        if (this.y == that.y) return Double.POSITIVE_INFINITY;
+        if (this.x == that.x) return Double.POSITIVE_INFINITY;
+        if (this.y == that.y) return +0.0;
         return (that.y - this.y)/Double.valueOf(that.x - this.x);
     }
 
@@ -123,15 +122,22 @@ public class Point implements Comparable<Point> {
      */
     public static void main(String[] args) {
         /* YOUR CODE HERE */
-        Point p1 = new Point(3000,24000);
-        Point p2 = new Point(3000,24000);
+        Point[] points = new Point[4];
+        points[0] = new Point(1000,1000);
+        points[1] = new Point(2000,2000);
+        points[2] = new Point(3000,3000);
+        points[3] = new Point(4000,4000);
+
         StdDraw.enableDoubleBuffering ();
         StdDraw.setXscale (0, 32768);
         StdDraw.setYscale (0, 32768);
-        p1.drawTo(p2);
-        p2.draw();
+
         StdDraw.show ();
-        StdOut.println(p1.compareTo(p2));
-        StdOut.println(p1.slopeTo(p2));
+        BruteCollinearPoints bruteCollinearPoints = new BruteCollinearPoints(points);
+        LineSegment[] lineSegments = bruteCollinearPoints.segments();
+        for (int i = 0; i < lineSegments.length; ++i) {
+            StdOut.println(lineSegments[i].toString());
+        }
+        StdDraw.show ();
     }
 }
